@@ -4,6 +4,7 @@ import com.gabrielliondas.workshopmongo.domain.User;
 import com.gabrielliondas.workshopmongo.dto.UserDTO;
 import com.gabrielliondas.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.annotation.Id;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -42,6 +43,14 @@ public class UserResource {
     @RequestMapping(value="/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<Void> delete(@PathVariable String id){
         service.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @RequestMapping(value="/{id}", method = RequestMethod.PUT)
+    public ResponseEntity<Void> update(@RequestBody UserDTO objDto, @PathVariable String id){
+        User obj = service.fromDTO(objDto);
+        obj.setId(id);
+        obj = service.update((obj));
         return ResponseEntity.noContent().build();
     }
 }
