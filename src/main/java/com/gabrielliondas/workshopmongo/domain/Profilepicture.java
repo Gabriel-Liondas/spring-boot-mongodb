@@ -14,7 +14,7 @@ public class Profilepicture implements Serializable {
 
     @Id
     private String id;
-    private byte[] imageDate;
+    private byte[] imageData;
 
     public String getId() {
         return id;
@@ -25,11 +25,11 @@ public class Profilepicture implements Serializable {
     }
 
     public byte[] getImageCode() {
-        return imageDate;
+        return imageData;
     }
 
-    public void setImageCode(byte[] imageDate) {
-        this.imageDate = imageDate;
+    public void setImageCode(byte[] imageData) {
+        this.imageData = imageData;
     }
 
     @Override

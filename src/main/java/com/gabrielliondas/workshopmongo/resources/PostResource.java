@@ -7,6 +7,7 @@ import com.gabrielliondas.workshopmongo.dto.UserDTO;
 import com.gabrielliondas.workshopmongo.services.PostService;
 import com.gabrielliondas.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -23,8 +24,13 @@ public class PostResource {
 
     @RequestMapping(method = RequestMethod.GET)
     public ResponseEntity<List<Post>> findAll() {
+        HttpHeaders allowLocalHostHeaders = new HttpHeaders();
+        allowLocalHostHeaders.add("Access-Control-Allow-Origin", "http://localhost:3000");
+        allowLocalHostHeaders.add("Access-Control-Allow-Methods", "GET");
+        allowLocalHostHeaders.add("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
         List<Post> list = service.findAllSorted();
-        return ResponseEntity.ok().body(list);
+        return ResponseEntity.ok().headers(allowLocalHostHeaders).body(list);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

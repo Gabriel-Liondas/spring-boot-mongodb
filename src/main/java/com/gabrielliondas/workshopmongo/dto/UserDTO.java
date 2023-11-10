@@ -27,7 +27,7 @@ public class UserDTO implements Serializable {
         id = obj.getId();
         name = obj.getName();
         email = obj.getEmail();
-        profilePic = obj.getProfilePic();
+        /*        profilePic = obj.getProfilePic();*/
         postsIDs = obj.getPosts().stream().map(Post::getId).collect(Collectors.toList());
     }
 

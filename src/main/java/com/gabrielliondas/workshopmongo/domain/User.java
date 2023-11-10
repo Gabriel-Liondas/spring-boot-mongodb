@@ -19,8 +19,6 @@ public class User implements Serializable {
     private String id;
     private String name;
     private String email;
-    private String profilePic;
-    @DBRef(lazy = true)
     private List<Post> posts = new ArrayList<>();
 
     public User() {
@@ -57,13 +55,13 @@ public class User implements Serializable {
         return result;
     }
 
-    public String getProfilePic() {
+/*    public String getProfilePic() {
         return profilePic;
-    }
+    }*/
 
-    public void setProfilePic(String profilePic) {
+/*    public void setProfilePic(String profilePic) {
         this.profilePic = profilePic;
-    }
+    }*/
 
     public String getId() {
         return id;
