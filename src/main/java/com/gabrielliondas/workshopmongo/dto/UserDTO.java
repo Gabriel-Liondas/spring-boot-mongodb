@@ -1,4 +1,5 @@
 package com.gabrielliondas.workshopmongo.dto;
+
 import com.gabrielliondas.workshopmongo.domain.Post;
 import com.gabrielliondas.workshopmongo.domain.User;
 import org.springframework.data.mongodb.core.mapping.DBRef;
@@ -11,20 +12,22 @@ import java.util.stream.Collectors;
 
 public class UserDTO implements Serializable {
     @Serial
-    private static final  long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private String id;
     private String name;
     private String email;
+    private String profilePic;
 
     private List<String> postsIDs;
 
     public UserDTO() {
     }
 
-    public UserDTO(User obj){
+    public UserDTO(User obj) {
         id = obj.getId();
         name = obj.getName();
         email = obj.getEmail();
+        profilePic = obj.getProfilePic();
         postsIDs = obj.getPosts().stream().map(Post::getId).collect(Collectors.toList());
     }
 
@@ -51,6 +54,7 @@ public class UserDTO implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
     public List<String> getPostsIDs() {
         return postsIDs;
     }

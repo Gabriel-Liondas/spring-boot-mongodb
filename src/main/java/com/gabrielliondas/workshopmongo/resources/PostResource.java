@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.util.Date;
 import java.util.List;
 
 @RestController
@@ -20,12 +21,11 @@ public class PostResource {
     @Autowired
     private PostService service;
 
-//    @RequestMapping(method = RequestMethod.GET)
-//    public ResponseEntity<List<Post>> findAll(){
-//        List<User> list = service.findAll();
-//        List<UserDTO> listDto = list.stream().map(UserDTO::new).toList();
-//        return ResponseEntity.ok().body(listDto);
-//    }
+    @RequestMapping(method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> findAll() {
+        List<Post> list = service.findAllSorted();
+        return ResponseEntity.ok().body(list);
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public ResponseEntity<Post> findById(@PathVariable String id) {
@@ -38,6 +38,20 @@ public class PostResource {
         text = URL.decodeParam(text);
         List<Post> list = service.findByTitle(text);
 
+        return ResponseEntity.ok().body(list);
+    }
+
+    @RequestMapping(value = "/fullsearch", method = RequestMethod.GET)
+    public ResponseEntity<List<Post>> fullSearch(
+            @RequestParam(value = "text", defaultValue = "") String text,
+            @RequestParam(value = "minDate", defaultValue = "") String minDate,
+            @RequestParam(value = "maxDate", defaultValue = "") String maxDate
+    ) {
+        text = URL.decodeParam(text);
+        Date min = URL.convertDate(minDate, new Date(0L));
+        Date max = URL.convertDate(maxDate, new Date());
+
+        List<Post> list = service.fullSearch(text, min, max);
         return ResponseEntity.ok().body(list);
     }
 

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@Document(collection="user")
+@Document(collection = "user")
 public class User implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -19,10 +19,12 @@ public class User implements Serializable {
     private String id;
     private String name;
     private String email;
+    private String profilePic;
     @DBRef(lazy = true)
     private List<Post> posts = new ArrayList<>();
 
-    public User(){}
+    public User() {
+    }
 
     public User(String id, String name, String email) {
         this.id = id;
@@ -53,6 +55,14 @@ public class User implements Serializable {
         int result = 1;
         result = prime * result + ((id == null) ? 0 : id.hashCode());
         return result;
+    }
+
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
     }
 
     public String getId() {
