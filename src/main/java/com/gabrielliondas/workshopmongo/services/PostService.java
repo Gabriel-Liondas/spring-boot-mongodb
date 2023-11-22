@@ -15,10 +15,10 @@ public class PostService {
     @Autowired
     private PostRepository repo;
 
-    public List<Post> findAllSorted() {
+    public List<String> findAllSortedbyDate() {
         List<Post> findAllPost = repo.findAll();
         findAllPost.sort(Comparator.comparing(Post::getDate).reversed());
-        return findAllPost;
+        return findAllPost.stream().map(Post::getId).toList();
     }
 
     public Post findById(String id) {

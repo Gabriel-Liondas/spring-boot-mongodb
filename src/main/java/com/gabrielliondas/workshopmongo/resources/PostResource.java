@@ -23,14 +23,9 @@ public class PostResource {
     private PostService service;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ResponseEntity<List<Post>> findAll() {
-        HttpHeaders allowLocalHostHeaders = new HttpHeaders();
-        allowLocalHostHeaders.add("Access-Control-Allow-Origin", "http://localhost:3000");
-        allowLocalHostHeaders.add("Access-Control-Allow-Methods", "GET");
-        allowLocalHostHeaders.add("Access-Control-Allow-Headers", "Content-Type, Authorization");
-
-        List<Post> list = service.findAllSorted();
-        return ResponseEntity.ok().headers(allowLocalHostHeaders).body(list);
+    public ResponseEntity<List<String>> findAllIds() {
+        List<String> list = service.findAllSortedbyDate();
+        return ResponseEntity.ok().body(list);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)

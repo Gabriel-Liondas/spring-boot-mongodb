@@ -33,10 +33,10 @@ public class Profilepicture implements Serializable {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Profilepicture pfpic = (Profilepicture) o;
+    public boolean equals(Object objectComp) {
+        if (this == objectComp) return true;
+        if (objectComp == null || getClass() != objectComp.getClass()) return false;
+        Profilepicture pfpic = (Profilepicture) objectComp;
         return Objects.equals(id, pfpic.id);
     }
 
