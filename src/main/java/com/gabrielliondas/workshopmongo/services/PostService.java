@@ -44,7 +44,4 @@ public class PostService {
         relatedDataSevice.comparePostAuthor(obj);
         return repo.insert(obj);
     }
-    // eu preciso trocar pra ao invés dele dar um catch eu fazer a pesquisa nesse
-    // próprio serviço e ai sim jogar a exessão, ou fazer o esquema do GPT
-    // e colocar em um serviço separado, que provavelmente é a melhor prática
 }
