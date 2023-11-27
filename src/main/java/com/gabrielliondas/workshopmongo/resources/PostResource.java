@@ -5,6 +5,7 @@ import com.gabrielliondas.workshopmongo.resources.util.URL;
 import com.gabrielliondas.workshopmongo.domain.User;
 import com.gabrielliondas.workshopmongo.dto.UserDTO;
 import com.gabrielliondas.workshopmongo.services.PostService;
+import com.gabrielliondas.workshopmongo.services.UserPostRelatedDataSevice;
 import com.gabrielliondas.workshopmongo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import java.net.URI;
 import java.util.Date;
 import java.util.List;
 
@@ -54,6 +56,13 @@ public class PostResource {
 
         List<Post> list = service.fullSearch(text, min, max);
         return ResponseEntity.ok().body(list);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<Void> createPost(@RequestBody Post objPost) {
+        Post obj = service.insert((objPost));
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(obj.getId()).toUri();
+        return ResponseEntity.created(uri).build();
     }
 
 
