@@ -1,20 +1,31 @@
 package com.gabrielliondas.workshopmongo.config;
 
 import com.gabrielliondas.workshopmongo.domain.Post;
+import com.gabrielliondas.workshopmongo.domain.Profilepicture;
 import com.gabrielliondas.workshopmongo.domain.User;
 import com.gabrielliondas.workshopmongo.dto.AuthorDTO;
 import com.gabrielliondas.workshopmongo.dto.CommentDTO;
+import com.gabrielliondas.workshopmongo.repository.ImageRepository;
 import com.gabrielliondas.workshopmongo.repository.PostRepository;
 import com.gabrielliondas.workshopmongo.repository.UserRepository;
+import org.bson.BsonBinarySubType;
+import org.bson.types.Binary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
 
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.TimeZone;
+
+import java.nio.file.Files;
+import java.io.File;
 
 @Configuration
 public class Instantiation implements CommandLineRunner {
@@ -25,6 +36,17 @@ public class Instantiation implements CommandLineRunner {
     @Autowired
     private PostRepository postRepository;
 
+    @Autowired
+    private ImageRepository imageRepository;
+
+    public static byte[] toByteArray(BufferedImage bi, String format)
+            throws IOException {
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        ImageIO.write(bi, format, baos);
+        return baos.toByteArray();
+    }
+
     @Override
     public void run(String... args) throws Exception {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -32,10 +54,22 @@ public class Instantiation implements CommandLineRunner {
 
         userRepository.deleteAll();
         postRepository.deleteAll();
+        imageRepository.deleteAll();
 
-        User maria = new User(null, "Maria Brown", "maria@gmail.com");
-        User alex = new User(null, "Alex Green", "alex@gmail.com");
-        User bob = new User(null, "Bob Grey", "bob@gmail.com");
+        BufferedImage mariaImage = ImageIO.read(new File("C:\\Users\\gabriel.liondas\\Documents\\Curso Java\\APIProject\\workshopmongo\\src\\main\\java\\com\\gabrielliondas\\workshopmongo\\config\\instantiationImages\\mariaBrown.jpg"));
+        BufferedImage alexImage = ImageIO.read(new File("C:\\Users\\gabriel.liondas\\Documents\\Curso Java\\APIProject\\workshopmongo\\src\\main\\java\\com\\gabrielliondas\\workshopmongo\\config\\instantiationImages\\alexGreen.jpg"));
+        BufferedImage bobImage = ImageIO.read(new File("C:\\Users\\gabriel.liondas\\Documents\\Curso Java\\APIProject\\workshopmongo\\src\\main\\java\\com\\gabrielliondas\\workshopmongo\\config\\instantiationImages\\bobGrey.jpg"));
+
+
+        Profilepicture mariaImg = new Profilepicture(null, new Binary(BsonBinarySubType.BINARY, toByteArray(mariaImage, "jpg")));
+        Profilepicture alexImg = new Profilepicture(null, new Binary(BsonBinarySubType.BINARY, toByteArray(alexImage, "jpg")));
+        Profilepicture bobImg = new Profilepicture(null, new Binary(BsonBinarySubType.BINARY, toByteArray(bobImage, "jpg")));
+        imageRepository.saveAll(Arrays.asList(mariaImg, alexImg, bobImg));
+
+
+        User maria = new User(null, "Maria Brown", "maria@gmail.com", mariaImg.getId());
+        User alex = new User(null, "Alex Green", "alex@gmail.com", alexImg.getId());
+        User bob = new User(null, "Bob Grey", "bob@gmail.com", bobImg.getId());
 
         userRepository.saveAll(Arrays.asList(maria, alex, bob));
 

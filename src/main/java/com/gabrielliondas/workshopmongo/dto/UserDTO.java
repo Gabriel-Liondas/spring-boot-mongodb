@@ -16,7 +16,7 @@ public class UserDTO implements Serializable {
     private String id;
     private String name;
     private String email;
-    private String profilePic;
+    private String profilePicId;
 
     private List<String> postsIDs;
 
@@ -27,7 +27,7 @@ public class UserDTO implements Serializable {
         id = obj.getId();
         name = obj.getName();
         email = obj.getEmail();
-        /*        profilePic = obj.getProfilePic();*/
+        profilePicId = obj.getProfilePicId();
         postsIDs = obj.getPosts().stream().map(Post::getId).collect(Collectors.toList());
     }
 
@@ -63,5 +63,11 @@ public class UserDTO implements Serializable {
         this.postsIDs = postsIDs;
     }
 
+    public String getProfilePicId() {
+        return profilePicId;
+    }
 
+    public void setProfilePicId(String profilePicId) {
+        this.profilePicId = profilePicId;
+    }
 }

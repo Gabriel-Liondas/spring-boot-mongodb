@@ -20,14 +20,16 @@ public class User implements Serializable {
     private String name;
     private String email;
     private List<Post> posts = new ArrayList<>();
+    private String profilePicId;
 
     public User() {
     }
 
-    public User(String id, String name, String email) {
+    public User(String id, String name, String email, String profilePicId) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.profilePicId = profilePicId;
     }
 
     @Override
@@ -55,13 +57,13 @@ public class User implements Serializable {
         return result;
     }
 
-/*    public String getProfilePic() {
-        return profilePic;
-    }*/
+    public String getProfilePicId() {
+        return profilePicId;
+    }
 
-/*    public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
-    }*/
+    public void setProfilePicId(String profilePic) {
+        this.profilePicId = profilePic;
+    }
 
     public String getId() {
         return id;
@@ -94,4 +96,6 @@ public class User implements Serializable {
     public void setPosts(List<Post> posts) {
         this.posts = posts;
     }
+
+
 }

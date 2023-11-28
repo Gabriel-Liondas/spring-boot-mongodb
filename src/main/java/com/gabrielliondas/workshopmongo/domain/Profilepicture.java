@@ -1,5 +1,6 @@
 package com.gabrielliondas.workshopmongo.domain;
 
+import org.bson.types.Binary;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -14,22 +15,30 @@ public class Profilepicture implements Serializable {
 
     @Id
     private String id;
-    private byte[] imageData;
+    private Binary image;
 
     public String getId() {
         return id;
+    }
+
+    public Profilepicture(String id, Binary image) {
+        this.id = id;
+        this.image = image;
+    }
+
+    public Profilepicture() {
     }
 
     public void setId(String id) {
         this.id = id;
     }
 
-    public byte[] getImageCode() {
-        return imageData;
+    public Binary getImage() {
+        return image;
     }
 
-    public void setImageCode(byte[] imageData) {
-        this.imageData = imageData;
+    public void setImage(Binary imageData) {
+        this.image = imageData;
     }
 
     @Override
